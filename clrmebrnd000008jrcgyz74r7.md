@@ -167,7 +167,7 @@ Name = "Server ${each.key}"
 
 ## Task
 
-* Create the above Infrastructure as code and demonstrate the use of Count and for\_each.
+* Create the above Infrastructure as code and demonstrate the use of **Count** and **for\_each**.
     
 
 The count meta-argument: Create a main.tf file with the following.
