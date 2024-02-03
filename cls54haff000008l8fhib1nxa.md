@@ -1,8 +1,8 @@
 ---
-title: "Grafana"
+title: "Grafana Setup"
 datePublished: Fri Feb 02 2024 20:53:27 GMT+0000 (Coordinated Universal Time)
 cuid: cls54haff000008l8fhib1nxa
-slug: grafana-1
+slug: grafana-setup
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1706906999876/a0272de1-efa5-4cc1-b73a-6962fb4580a2.png
 tags: aws, devops, grafana, 90daysofdevops
 
