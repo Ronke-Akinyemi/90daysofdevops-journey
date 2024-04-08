@@ -1,8 +1,8 @@
 ---
-title: "Project-4"
+title: "Deploying a Web Application Using Docker Swarm"
 datePublished: Mon Apr 08 2024 13:18:38 GMT+0000 (Coordinated Universal Time)
 cuid: cluqzalyy000008l55ojvh0ds
-slug: project-4
+slug: deploying-a-web-application-using-docker-swarm
 cover: https://cdn.hashnode.com/res/hashnode/image/upload/v1712579694127/d300bdae-ad77-4b35-9509-565d8ffb82af.png
 tags: docker, aws, devops
 
