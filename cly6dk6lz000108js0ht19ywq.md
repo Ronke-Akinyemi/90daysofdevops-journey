@@ -57,9 +57,10 @@ while IFS=';' read -r username groups; do
 done < "$input_file"
 ```
 
-Understanding the Script
+### Understanding the Script
 
-Password Generation Function generates a random 12-character password.
+* Password Generation Function generates a random 12-character password.
+    
 
 ```bash
 generate_password() {
@@ -67,19 +68,28 @@ generate_password() {
 }
 ```
 
-Input File defines the file with user and group information.
+* Input File defines the file with user and group information.
+    
 
 ```bash
 input_file="user_lists.txt"
 ```
 
-This reads the file line-by-line, splitting into username and groups.
+* **While Loop:**
+    
+    * Reads each line from `user_lists.txt`, where each line contains a username and one or more groups separated by semicolons.
+        
+    * `IFS=';' read -r username groups;`: Splits each line into `username` and `groups`.
+        
 
 ```bash
 while IFS=';' read -r username groups; do
 ```
 
-Check if the user exist and skips user creation if the user already exists.
+* Checks if the user already exists using `id "$username" &>/dev/null`.
+    
+* If the user exists, it logs a message and skips the creation process.
+    
 
 ```bash
 if id "$username" &>/dev/null; then
@@ -89,14 +99,22 @@ if id "$username" &>/dev/null; then
 fi
 ```
 
-User and Group Creation: Creates the user and primary group.
+* User and Group Creation: Creates a user (`useradd -m -s /bin/bash "$username"`) with a home directory (`-m`) and sets the shell to `/bin/bash`.
+    
+* Adds the user to their primary group (`usermod -aG "$username" "$username"`).
+    
 
 ```bash
 useradd -m -s /bin/bash "$username"
 usermod -aG "$username" "$username"
 ```
 
-Creates and assigns additional groups.
+* Creates and assigns additional groups. Splits the `groups` string by commas (`IFS=',' read -ra groups_array <<< "$groups"`) into an array.
+    
+* Iterates over each group and creates it (`groupadd "$group"`) if it doesn't exist.
+    
+* Adds the user to each additional group (`usermod -aG "$group" "$username"`).
+    
 
 ```bash
 IFS=',' read -ra groups_array <<< "$groups"
@@ -106,7 +124,12 @@ for group in "${groups_array[@]}"; do
 done
 ```
 
-Sets the user’s password, logs the action, and stores the password securely.
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1720132341821/f7167cf4-2ac9-4a89-9702-e573fb91f9e8.jpeg align="center")
+
+* Generates a random password (`password=$(generate_password)`).
+    
+* Sets the user's password using `chpasswd` and logs it securely (`echo "$username:$password" >> /var/secure/user_passwords.txt`).
+    
 
 ```bash
 password=$(generate_password)
@@ -115,14 +138,20 @@ echo "$(date) - Created user $username with groups $groups" >> /var/log/user_man
 echo "$username:$password" >> /var/secure/user_passwords.txt
 ```
 
-Sets ownership and permissions for the home directory.
+* Sets ownership and permissions for the home directory.
+    
+* Sets permissions and ownership for the user's home directory (`chown -R "$username:$username" "/home/$username"`).
+    
 
 ```bash
 chown -R "$username:$username" "/home/$username"
 chmod 700 "/home/$username"
 ```
 
-End of Loop
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1720132486121/f0c24054-76c2-42e4-bff1-b3c13ceb95b9.jpeg align="center")
+
+* End of Loop
+    
 
 ```bash
 done < "$input_file"
